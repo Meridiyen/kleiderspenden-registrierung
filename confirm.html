@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Registrierungsbestätigung</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand"><div class="logo">👕</div><div><h1>Kleiderspende-Portal</h1></div></div>
+      <nav class="nav"><a href="index.html">Registrieren</a><a href="confirm.html" class="active">Bestätigung</a></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Bestätigung</h2>
+      <div id="summary">
+        <!-- Inhalte werden per JS eingefügt -->
+      </div>
+
+      <div class="actions">
+        <a href="index.html" class="btn">Neue Registrierung</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <small>&copy; Kleiderspende-Projekt</small>
+    </div>
+  </footer>
+
+  <script>
+  // Kurze Inline-Logik: Hol die Daten aus sessionStorage und zeige sie sicher an.
+  (function(){
+    function escapeHtml(str){
+      if (!str && str !== 0) return '';
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    const dataRaw = sessionStorage.getItem('kleiderspende');
+    const container = document.getElementById('summary');
+    if (!dataRaw){
+      container.innerHTML = '<p class="muted">Es wurden keine Registrierungsdaten gefunden. Bitte kehre zur Registrierungsseite zurück.</p>';
+      return;
+    }
+
+    try {
+      const data = JSON.parse(dataRaw);
+      const dt = new Date(data.timestamp);
+      const date = dt.toLocaleDateString();
+      const time = dt.toLocaleTimeString();
+
+      // sichere Ausgabe
+      const rows = [
+        ['Übergabeart', escapeHtml(data.mode)],
+        ['Name', escapeHtml(data.name || '-')],
+        ['E-Mail', escapeHtml(data.email || '-')],
+        ['Art der Kleidung', escapeHtml(data.clothingType)],
+        ['Krisengebiet', escapeHtml(data.crisis)],
+      ];
+
+      if (data.mode === 'pickup'){
+        rows.push(['Abholadresse', escapeHtml(data.address || '-')]);
+        rows.push(['PLZ', escapeHtml(data.postcode || '-')]);
+      } else {
+        rows.push(['Ort', 'Geschäftsstelle (Hauptstraße 1, 10115 Musterstadt)']);
+      }
+
+      rows.push(['Datum', escapeHtml(date)]);
+      rows.push(['Uhrzeit', escapeHtml(time)]);
+
+      let html = '<table class="summary-table">';
+      rows.forEach(r => {
+        html += `<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`;
+      });
+      html += '</table>';
+      container.innerHTML = html;
+
+    } catch(e){
+      container.innerHTML = '<p class="muted">Fehler beim Lesen der Daten.</p>';
+    }
+  })();
+  </script>
+</body>
+</html>
