@@ -8,7 +8,7 @@
   const message = document.getElementById('formMessage');
 
   // Geschäftsstellen-PLZ (erste 2 Ziffern) - Simulierter fixer Wert
-  const officePostcodePrefix = '10'; // z.B. 10115 => '10' (du kannst das anpassen)
+  const officePostcodePrefix = '10'; // z.B. 10115 -> anpassbar
 
   function getSelectedMode(){
     return Array.from(modeRadios).find(r => r.checked).value;
@@ -37,7 +37,7 @@
       .replace(/'/g, "&#039;");
   }
 
-  // PLZ-Prüfung: erste zwei Zeichen müssen gleich
+  // PLZ-Prüfung
   function checkPostcodePrefix(inputPostcode){
     if (!inputPostcode) return false;
     const clean = inputPostcode.trim();
@@ -45,7 +45,7 @@
     return clean.slice(0,2) === officePostcodePrefix;
   }
 
-  // Formularvalidierung (minimal, klausurtauglich)
+  // Formularvalidierung
   function validateForm(data){
     const errors = [];
 
@@ -104,7 +104,7 @@
     }
 
     // Speichere die Daten sicher (als JSON string) in sessionStorage
-    // Achtung: sessionStorage ist lokal im Browser - in der Prüfung reicht das für das Frontend-Szenario.
+    // Achtung: sessionStorage ist lokal im Browser
     sessionStorage.setItem('kleiderspende', JSON.stringify(data));
 
     // Weiterleitung zur Bestätigungsseite
