@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kleiderspende registrieren</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="logo">👕</div>
+        <div>
+          <h1>Kleiderspende-Portal</h1>
+          <p class="subtitle">Schnell. Einfach. Verlässlich.</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="index.html" class="active">Registrieren</a>
+        <a href="confirm.html">Bestätigung</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card form-card">
+      <h2>Spende registrieren</h2>
+      <p class="muted">Wähle die Übergabeart und fülle das Formular aus.</p>
+
+      <form id="donationForm" novalidate>
+        <fieldset>
+          <legend>Übergabeart</legend>
+          <label class="radio">
+            <input type="radio" name="mode" value="office" checked>
+            Übergabe an der Geschäftsstelle
+          </label>
+          <label class="radio">
+            <input type="radio" name="mode" value="pickup">
+            Abholung durch Sammelfahrzeug
+          </label>
+        </fieldset>
+
+        <div class="form-grid">
+          <label for="name">Name (optional)</label>
+          <input id="name" name="name" type="text" placeholder="Max Mustermann">
+
+          <label for="email">E-Mail (optional)</label>
+          <input id="email" name="email" type="email" placeholder="mail@example.com">
+
+          <label for="clothingType">Art der Kleidung</label>
+          <select id="clothingType" name="clothingType" required>
+            <option value="">Bitte auswählen</option>
+            <option>Babykleidung</option>
+            <option>Damenbekleidung</option>
+            <option>Herrenbekleidung</option>
+            <option>Wintersachen</option>
+            <option>Sonstiges</option>
+          </select>
+
+          <label for="crisis">Krisengebiet</label>
+          <select id="crisis" name="crisis" required>
+            <option value="">Bitte auswählen</option>
+            <option>Syrien</option>
+            <option>Türkei</option>
+            <option>Ukraine</option>
+            <option>Mittelmeer-Region</option>
+            <option>Andere</option>
+          </select>
+
+          <div id="pickup-fields" class="hidden">
+            <label for="address">Abholadresse</label>
+            <input id="address" name="address" type="text" placeholder="Musterstraße 1">
+
+            <label for="postcode">Postleitzahl (Abholadresse)</label>
+            <input id="postcode" name="postcode" type="text" pattern="[0-9]{5}" placeholder="12345">
+          </div>
+
+          <div id="office-info" class="office-box">
+            <p><strong>Geschäftsstelle:</strong> Hauptstraße 1, 10115 Musterstadt</p>
+            <p class="muted">Für persönliche Übergabe wähle „Übergabe an der Geschäftsstelle“ — Adresse wird automatisch gesetzt.</p>
+          </div>
+
+        </div>
+
+        <div class="actions">
+          <button type="button" id="validateBtn" class="btn primary">Registrierung prüfen</button>
+          <button type="submit" class="btn">Registrieren</button>
+        </div>
+
+        <p id="formMessage" class="form-message" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <small>&copy; Kleiderspende-Projekt • Rechtliche Hinweise: Diese Seite ist ein Beispielprojekt.</small>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
